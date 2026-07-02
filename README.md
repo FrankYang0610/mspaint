@@ -32,7 +32,8 @@ http://127.0.0.1:8765/
 ## Build the macOS App
 
 The macOS app is a small native AppKit wrapper around a `WKWebView`. It loads
-the local `index.html` from the app bundle and does not require Electron.
+the local `index.html` from the app bundle, uses a frameless window with
+Windows-style controls in the web UI, and does not require Electron.
 
 Requirements:
 

@@ -22,9 +22,107 @@
 				height: 100%;
 				margin: 0;
 			}
+
+			.native-window-titlebar {
+				display: none;
+			}
+
+			html.native-window-shell .native-window-titlebar {
+				align-items: center;
+				background: linear-gradient(90deg, #000080, #1084d0);
+				box-sizing: border-box;
+				color: #ffffff;
+				display: flex;
+				font: bold 13px "MS Sans Serif", "Tahoma", sans-serif;
+				height: 31px;
+				justify-content: space-between;
+				line-height: 1;
+				padding: 3px 3px 3px 8px;
+				-webkit-user-select: none;
+				user-select: none;
+			}
+
+			html.native-window-shell .jspaint {
+				height: calc(100% - 31px);
+			}
+
+			.native-window-title {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.native-window-controls {
+				display: flex;
+				gap: 2px;
+				height: 24px;
+			}
+
+			.native-window-button {
+				align-items: center;
+				background: #c0c0c0;
+				border: 0;
+				border-bottom: 2px solid #404040;
+				border-left: 2px solid #ffffff;
+				border-right: 2px solid #404040;
+				border-top: 2px solid #ffffff;
+				box-sizing: border-box;
+				color: #000000;
+				display: flex;
+				font: bold 14px "Arial", sans-serif;
+				height: 23px;
+				justify-content: center;
+				margin: 0;
+				min-width: 25px;
+				padding: 0;
+			}
+
+			.native-window-button:active {
+				border-bottom-color: #ffffff;
+				border-left-color: #404040;
+				border-right-color: #ffffff;
+				border-top-color: #404040;
+				padding-left: 1px;
+				padding-top: 1px;
+			}
+
+			.native-window-button.close:hover {
+				background: #c75050;
+				color: #ffffff;
+			}
 		</style>
 	</head>
 	<body>
+		<div class="native-window-titlebar">
+			<div class="native-window-title">MS Paint</div>
+			<div class="native-window-controls">
+				<button class="native-window-button minimize" type="button" data-window-action="minimize" aria-label="Minimize">_</button>
+				<button class="native-window-button maximize" type="button" data-window-action="maximize" aria-label="Maximize">&#9633;</button>
+				<button class="native-window-button close" type="button" data-window-action="close" aria-label="Close">&#215;</button>
+			</div>
+		</div>
+		<script>
+			(function(){
+				function sendWindowAction(action) {
+					if (
+						window.webkit &&
+						window.webkit.messageHandlers &&
+						window.webkit.messageHandlers.windowControl
+					) {
+						window.webkit.messageHandlers.windowControl.postMessage(action);
+					}
+				}
+
+				document.addEventListener("DOMContentLoaded", function(){
+					var buttons = document.querySelectorAll("[data-window-action]");
+					for (var i = 0; i < buttons.length; i += 1) {
+						buttons[i].addEventListener("click", function(event){
+							sendWindowAction(event.currentTarget.getAttribute("data-window-action"));
+						});
+					}
+				});
+			}());
+		</script>
 		<script src="src/theme.js"></script>
 		<script src="lib/jquery.min.js"></script>
 		<script src="lib/pep.js"></script>
