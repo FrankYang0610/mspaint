@@ -7,6 +7,14 @@ This repository keeps the drawing interface and the local assets needed to run
 it, while removing the original page shell around it, including navigation,
 ads, analytics, and article content.
 
+## Live Demo
+
+GitHub Pages:
+
+```text
+https://frankyang0610.github.io/mspaint/
+```
+
 ## Run Locally
 
 You can serve the web app with any static file server:
