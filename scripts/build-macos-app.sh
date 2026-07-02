@@ -5,13 +5,14 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 APP_NAME="MS Paint"
 BUILD_DIR="$ROOT_DIR/build"
 APP_DIR="$BUILD_DIR/$APP_NAME.app"
+ROOT_APP_DIR="$ROOT_DIR/$APP_NAME.app"
 CONTENTS_DIR="$APP_DIR/Contents"
 MACOS_DIR="$CONTENTS_DIR/MacOS"
 RESOURCES_DIR="$CONTENTS_DIR/Resources"
 WEB_DIR="$RESOURCES_DIR/web"
 ICONSET_DIR="$BUILD_DIR/AppIcon.iconset"
 
-rm -rf "$APP_DIR" "$ICONSET_DIR"
+rm -rf "$APP_DIR" "$ROOT_APP_DIR" "$ICONSET_DIR"
 
 mkdir -p "$MACOS_DIR" "$RESOURCES_DIR" "$WEB_DIR" "$ICONSET_DIR"
 
@@ -42,5 +43,7 @@ sips -z 1024 1024 "$SOURCE_ICON" --out "$ICONSET_DIR/icon_512x512@2x.png" >/dev/
 
 iconutil -c icns "$ICONSET_DIR" -o "$RESOURCES_DIR/AppIcon.icns"
 codesign --force --deep --sign - "$APP_DIR"
+ditto "$APP_DIR" "$ROOT_APP_DIR"
 
 echo "Built $APP_DIR"
+echo "Updated $ROOT_APP_DIR"

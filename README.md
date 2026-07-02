@@ -53,6 +53,12 @@ The app will be created at:
 build/MS Paint.app
 ```
 
+The build script also refreshes a convenience copy at:
+
+```text
+MS Paint.app
+```
+
 The generated `.app` bundle is intentionally ignored by Git. Commit the source
 files and rebuild the bundle when needed.
 
